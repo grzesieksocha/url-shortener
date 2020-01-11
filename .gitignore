@@ -3,3 +3,4 @@ static/user_files/*
 !static/user_files/.gitkeep
 .idea
 urls.json
+__pycache__
