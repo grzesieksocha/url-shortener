@@ -1,5 +1,6 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
 {% for message in get_flashed_messages() %}

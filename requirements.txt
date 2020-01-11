@@ -1,1 +1,1 @@
-flask==1.1.1
+-r requirements/prod.txt
