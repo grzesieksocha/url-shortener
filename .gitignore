@@ -1,6 +1,6 @@
 venv
-static/user_files/*
-!static/user_files/.gitkeep
+urlshort/static/user_files/*
+!urlshort/static/user_files/.gitkeep
 .idea
 urls.json
 __pycache__

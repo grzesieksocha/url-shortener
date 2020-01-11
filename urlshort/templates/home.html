@@ -30,7 +30,7 @@
     <h2>Codes you have created:</h2>
     <ul>
         {% for code in codes %}
-            <li><a href="{{ url_for('redirect_to_saved_url', code=code) }}">{{ code }}</a>  (created: {{ codes[code].strftime("%d/%m/%Y %H:%M:%S") }})</li>
+            <li><a href="{{ url_for('urlshort.redirect_to_saved_url', code=code) }}">{{ code }}</a>  (created: {{ codes[code].strftime("%d/%m/%Y %H:%M:%S") }})</li>
         {% endfor %}
     </ul>
 {% endif %}

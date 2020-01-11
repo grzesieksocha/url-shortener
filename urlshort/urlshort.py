@@ -3,18 +3,17 @@ import os
 from datetime import datetime
 
 from werkzeug.utils import secure_filename
-from flask import Flask, render_template, request, redirect, url_for, flash, abort, session, jsonify
+from flask import render_template, request, redirect, url_for, flash, abort, session, jsonify, Blueprint
 
-app = Flask(__name__)
-app.secret_key = 'dsfjksbdilfbsklbdf'
+bp = Blueprint('urlshort', __name__, template_folder='templates')
 
 
-@app.route('/')
+@bp.route('/')
 def home():
     return render_template('home.html', codes=session)
 
 
-@app.route('/shortened', methods=['GET', 'POST'])
+@bp.route('/shortened', methods=['GET', 'POST'])
 def shortened():
     if request.method == 'POST':
 
@@ -25,7 +24,7 @@ def shortened():
 
         if request.form['code'] in urls.keys():
             flash('That code has already been taken. Please change it.')
-            return redirect(url_for('home'))
+            return redirect(url_for('urlshort.home'))
 
         if 'url' in request.form.keys():
             urls[request.form['code']] = {'url': request.form['url']}
@@ -41,10 +40,10 @@ def shortened():
             session[request.form['code']] = datetime.now()
         return render_template('shortened.html', code=request.form['code'])
     else:
-        return redirect(url_for('home'))
+        return redirect(url_for('urlshort.home'))
 
 
-@app.route('/<string:code>')
+@bp.route('/<string:code>')
 def redirect_to_saved_url(code):
     if os.path.exists('urls.json'):
         with open('urls.json') as urls_file:
@@ -58,11 +57,11 @@ def redirect_to_saved_url(code):
                 return abort(404)
 
 
-@app.errorhandler(404)
+@bp.errorhandler(404)
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
 
 
-@app.route('/api')
+@bp.route('/api')
 def session_api():
     return jsonify(list(session.keys()))
